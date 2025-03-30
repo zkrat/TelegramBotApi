@@ -177,7 +177,7 @@ class BotApi
      * @param HttpClientInterface|null $httpClient
      * @param string|null $endpoint
      */
-    public function __construct($token, HttpClientInterface $httpClient = null, $endpoint = null)
+    public function __construct($token, HttpClientInterface|null $httpClient = null, $endpoint = null)
     {
         $this->token = $token;
         $this->endpoint = ($endpoint ?: self::URL_PREFIX) . $token;
@@ -191,7 +191,7 @@ class BotApi
      * @param int|null $authDateDiff
      * @return bool
      */
-    public function validateWebAppData($rawData, $authDateDiff = null)
+    public function validateWebAppData($rawData, int|null $authDateDiff = null)
     {
         parse_str($rawData, $data);
 
@@ -244,7 +244,7 @@ class BotApi
      * @throws HttpException
      * @throws InvalidJsonException
      */
-    public function call($method, array $data = null, $timeout = null)
+    public function call(string $method, array|null $data = null,int|null $timeout = null)
     {
         if ($timeout !== null) {
             @trigger_error(sprintf('Passing $timeout parameter in %s::%s is deprecated. Use http client options', __CLASS__, __METHOD__), \E_USER_DEPRECATED);
@@ -290,7 +290,7 @@ class BotApi
      *
      * @return void
      */
-    public static function curlValidate($curl, $response = null)
+    public static function curlValidate($curl,string|false|null $response = null)
     {
         @trigger_error(sprintf('Method "%s::%s" is deprecated', __CLASS__, __METHOD__), \E_USER_DEPRECATED);
 
@@ -349,18 +349,18 @@ class BotApi
      * @throws Exception
      */
     public function sendMessage(
-        $chatId,
-        $text,
-        $parseMode = null,
-        $disablePreview = false,
-        $replyToMessageId = null,
-        $replyMarkup = null,
-        $disableNotification = false,
-        $messageThreadId = null,
-        $protectContent = null,
-        $allowSendingWithoutReply = null,
-        $replyParameters = null,
-        $linkPreviewOptions = null
+        int|float|string $chatId,
+        string $text,
+        string|null $parseMode = null,
+        bool $disablePreview = false,
+        int|null $replyToMessageId = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        bool $disableNotification = false,
+        int|null $messageThreadId = null,
+        bool|null $protectContent = null,
+        bool|null $allowSendingWithoutReply = null,
+        ReplyParameters|null $replyParameters = null,
+        LinkPreviewOptions|null $linkPreviewOptions = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -418,19 +418,19 @@ class BotApi
      * @throws InvalidJsonException
      */
     public function copyMessage(
-        $chatId,
-        $fromChatId,
-        $messageId,
-        $caption = null,
-        $parseMode = null,
-        $captionEntities = null,
-        $disableNotification = false,
-        $replyToMessageId = null,
-        $allowSendingWithoutReply = false,
-        $replyMarkup = null,
-        $messageThreadId = null,
-        $protectContent = null,
-        $replyParameters = null
+        int|string $chatId,
+        int|string $fromChatId,
+        int $messageId,
+        string|null $caption = null,
+        string|null $parseMode = null,
+        ArrayOfMessageEntity|null $captionEntities = null,
+        bool  $disableNotification = false,
+        int|null $replyToMessageId = null,
+        bool $allowSendingWithoutReply = false,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        int|null $messageThreadId = null,
+        bool|null $protectContent = null,
+        ReplyParameters|null $replyParameters = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -479,17 +479,17 @@ class BotApi
      * @throws Exception
      */
     public function sendContact(
-        $chatId,
-        $phoneNumber,
-        $firstName,
-        $lastName = null,
-        $replyToMessageId = null,
-        $replyMarkup = null,
-        $disableNotification = false,
-        $messageThreadId = null,
-        $protectContent = null,
-        $allowSendingWithoutReply = null,
-        $replyParameters = null
+        int|string $chatId,
+        string $phoneNumber,
+        string $firstName,
+        string $lastName = null,
+        int|null $replyToMessageId = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        bool $disableNotification = false,
+        int|null $messageThreadId = null,
+        bool|null $protectContent = null,
+        bool|null $allowSendingWithoutReply = null,
+        ReplyParameters|null $replyParameters = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -593,13 +593,13 @@ class BotApi
      * @throws Exception
      */
     public function setWebhook(
-        $url = '',
-        $certificate = null,
-        $ipAddress = null,
-        $maxConnections = 40,
-        $allowedUpdates = null,
-        $dropPendingUpdates = false,
-        $secretToken = null
+        string $url = '',
+        \CURLFile|string|null $certificate = null,
+        string|null $ipAddress = null,
+        int|null $maxConnections = 40,
+        array|string|null $allowedUpdates = null,
+        bool|null $dropPendingUpdates = false,
+        string|null$secretToken = null
     ) {
         return $this->call('setWebhook', [
             'url' => $url,
@@ -700,17 +700,17 @@ class BotApi
      * @throws Exception
      */
     public function sendLocation(
-        $chatId,
-        $latitude,
-        $longitude,
-        $replyToMessageId = null,
-        $replyMarkup = null,
-        $disableNotification = false,
-        $livePeriod = null,
-        $messageThreadId = null,
-        $protectContent = null,
-        $allowSendingWithoutReply = null,
-        $replyParameters = null
+        int|string $chatId,
+        float $latitude,
+        float $longitude,
+        int|null $replyToMessageId = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        bool $disableNotification = false,
+        null|int $livePeriod = null,
+        int|null $messageThreadId = null,
+        bool|null $protectContent = null,
+        bool|null $allowSendingWithoutReply = null,
+        ReplyParameters|null $replyParameters = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -754,12 +754,12 @@ class BotApi
      * @throws Exception
      */
     public function editMessageLiveLocation(
-        $chatId,
-        $messageId,
-        $inlineMessageId,
-        $latitude,
-        $longitude,
-        $replyMarkup = null
+        int|string  $chatId,
+        int $messageId,
+        string $inlineMessageId,
+        float $latitude,
+        float $longitude,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null
     ) {
         $response = $this->call('editMessageLiveLocation', [
             'chat_id' => $chatId,
@@ -791,10 +791,10 @@ class BotApi
      * @throws Exception
      */
     public function stopMessageLiveLocation(
-        $chatId,
-        $messageId,
-        $inlineMessageId,
-        $replyMarkup = null
+        int|string $chatId,
+        int  $messageId,
+        string $inlineMessageId,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null
     ) {
         $response = $this->call('stopMessageLiveLocation', [
             'chat_id' => $chatId,
@@ -830,19 +830,19 @@ class BotApi
      * @throws Exception
      */
     public function sendVenue(
-        $chatId,
-        $latitude,
-        $longitude,
-        $title,
-        $address,
-        $foursquareId = null,
-        $replyToMessageId = null,
-        $replyMarkup = null,
-        $disableNotification = false,
-        $messageThreadId = null,
-        $protectContent = null,
-        $allowSendingWithoutReply = null,
-        $replyParameters = null
+        int|string $chatId,
+        float $latitude,
+        float $longitude,
+        string $title,
+        string $address,
+        string|null $foursquareId = null,
+        int|null $replyToMessageId = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        bool $disableNotification = false,
+        int|null $messageThreadId = null,
+        bool|null  $protectContent = null,
+        bool|null $allowSendingWithoutReply = null,
+        ReplyParameters|null  $replyParameters = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -890,15 +890,15 @@ class BotApi
      * @throws Exception
      */
     public function sendSticker(
-        $chatId,
-        $sticker,
-        $replyToMessageId = null,
-        $replyMarkup = null,
-        $disableNotification = false,
-        $protectContent = false,
-        $allowSendingWithoutReply = false,
-        $messageThreadId = null,
-        $replyParameters = null
+        int|string $chatId,
+        \CURLFile|string  $sticker,
+        int|null $replyToMessageId = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null  $replyMarkup = null,
+        bool $disableNotification = false,
+        bool $protectContent = false,
+        bool $allowSendingWithoutReply = false,
+        string|null $messageThreadId = null,
+        ReplyParameters|null $replyParameters = null
     ) {
         if (null !== $replyToMessageId || null !== $allowSendingWithoutReply) {
             @trigger_error(
@@ -930,7 +930,7 @@ class BotApi
      * @throws InvalidArgumentException
      * @throws Exception
      */
-    public function getStickerSet($name)
+    public function getStickerSet(string $name)
     {
         return StickerSet::fromResponse($this->call('getStickerSet', [
             'name' => $name,
