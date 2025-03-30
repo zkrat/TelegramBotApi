@@ -482,7 +482,7 @@ class BotApi
         int|string $chatId,
         string $phoneNumber,
         string $firstName,
-        string $lastName = null,
+        string|null $lastName = null,
         int|null $replyToMessageId = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         bool $disableNotification = false,
