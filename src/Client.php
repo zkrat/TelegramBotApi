@@ -43,7 +43,7 @@ class Client
      * @param HttpClientInterface|null $httpClient
      * @param string|null $endpoint
      */
-    public function __construct($token, HttpClientInterface $httpClient = null, $endpoint = null)
+    public function __construct($token, HttpClientInterface|null $httpClient = null, $endpoint = null)
     {
         $this->api = new BotApi($token, $httpClient, $endpoint);
         $this->events = new EventCollection();
