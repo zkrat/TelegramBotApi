@@ -27,7 +27,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param array|null $data
      * @return array
      */
-    abstract protected function doRequest($url, array $data = null);
+    abstract protected function doRequest($url, array|null $data = null);
 
     /**
      * @param string $url

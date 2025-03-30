@@ -24,7 +24,7 @@ class SymfonyHttpClient extends AbstractHttpClient
     /**
      * @inheritDoc
      */
-    protected function doRequest($url, array $data = null)
+    protected function doRequest($url, array|null $data = null)
     {
         $options = [];
         if ($data) {
