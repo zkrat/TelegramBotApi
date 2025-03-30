@@ -10,6 +10,7 @@ interface HttpClientInterface
     /**
      * Request url
      *
+     *
      * @param string $url
      * @param array|null $data
      * @return mixed
